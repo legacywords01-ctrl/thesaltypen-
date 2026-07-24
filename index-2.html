@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Salty Pen Content Studio — We Transform Spoken Words Into Lasting Resources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1714;
+    --parchment:#F5F0E6;
+    --parchment-dim:#EDE6D6;
+    --gold:#C9971F;
+    --gold-soft:#E3BE5E;
+    --charcoal:#3D3A35;
+    --bronze:#8A6E2F;
+    --line: rgba(26,23,20,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  h1,h2,h3,.serif{ font-family:'Fraunces', serif; }
+  .eyebrow{
+    font-family:'Inter', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:0.72rem;
+    font-weight:600;
+    color:var(--bronze);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+
+  ::selection{ background:var(--gold); color:var(--ink); }
+
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(245,240,230,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  header.scrolled{
+    border-bottom:1px solid var(--line);
+    background:rgba(245,240,230,0.96);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:76px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+  }
+  .brand .mark{
+    width:30px; height:30px;
+    display:grid; place-items:center;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    font-size:0.88rem;
+    font-weight:500;
+  }
+  .nav-links a{
+    position:relative;
+    padding:4px 0;
+    color:var(--charcoal);
+    transition:color .2s;
+  }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-2px;
+    width:0; height:1px;
+    background:var(--gold);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{
+    background:var(--ink);
+    color:var(--parchment) !important;
+    padding:10px 20px;
+    border-radius:2px;
+    font-size:0.82rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .nav-cta::after{ display:none; }
+  .nav-cta:hover{ background:var(--bronze); }
+  .menu-btn{
+    display:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:8px;
+  }
+  .menu-btn span{
+    display:block;
+    width:22px; height:1.5px;
+    background:var(--ink);
+    margin:5px 0;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:76px;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% 15%, rgba(201,151,31,0.10), transparent 60%),
+      var(--parchment);
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:60px;
+    align-items:center;
+    width:100%;
+  }
+  .locale-tag{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--bronze);
+    margin-bottom:28px;
+    font-weight:600;
+  }
+  .locale-tag .dot{
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 5.4vw, 4.6rem);
+    line-height:1.03;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin-bottom:26px;
+  }
+  .hero h1 .gold{ color:var(--gold); font-weight:600; }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--bronze);
+    display:inline-block;
+  }
+  .hero p.lede{
+    font-size:1.08rem;
+    line-height:1.65;
+    color:var(--charcoal);
+    max-width:480px;
+    margin-bottom:38px;
+  }
+  .hero p.lede strong{ color:var(--ink); font-weight:600; }
+
+  .hero-ctas{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--ink);
+    color:var(--parchment);
+    padding:15px 28px;
+    border-radius:2px;
+    font-weight:600;
+    font-size:0.92rem;
+    letter-spacing:0.01em;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:background .2s, transform .2s;
+  }
+  .btn-primary:hover{ background:var(--bronze); transform:translateY(-1px); }
+  .btn-ghost{
+    font-weight:600;
+    font-size:0.92rem;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+    transition:color .2s, border-color .2s;
+  }
+  .btn-ghost:hover{ color:var(--bronze); border-color:var(--bronze); }
+
+  /* waveform-to-lines signature */
+  .signature-panel{
+    position:relative;
+    background:var(--ink);
+    border-radius:4px;
+    padding:44px 36px 36px;
+    min-height:420px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    box-shadow:0 30px 60px -20px rgba(26,23,20,0.35);
+  }
+  .signature-panel .tag{
+    color:var(--gold-soft);
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:26px;
+  }
+  #wave-canvas{
+    width:100%;
+    height:180px;
+    display:block;
+  }
+  .transform-caption{
+    color:rgba(245,240,230,0.55);
+    font-size:0.82rem;
+    margin-top:22px;
+    line-height:1.6;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+  }
+  .transform-caption .hl{ color:var(--gold-soft); font-style:normal; font-weight:600; }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:34px; left:32px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--bronze);
+    font-weight:600;
+  }
+  .scroll-cue .line{
+    width:32px; height:1px;
+    background:var(--bronze);
+    position:relative;
+    overflow:hidden;
+  }
+  .scroll-cue .line::after{
+    content:'';
+    position:absolute;
+    left:-100%; top:0;
+    width:100%; height:100%;
+    background:var(--gold);
+    animation:cue 1.8s ease-in-out infinite;
+  }
+  @keyframes cue{
+    0%{ left:-100%; }
+    50%{ left:100%; }
+    100%{ left:100%; }
+  }
+
+  /* ---------- MARQUEE / TRUST STRIP ---------- */
+  .trust-strip{
+    background:var(--ink);
+    padding:20px 0;
+    overflow:hidden;
+  }
+  .trust-track{
+    display:flex;
+    gap:64px;
+    white-space:nowrap;
+    animation:scroll-left 28s linear infinite;
+    width:max-content;
+  }
+  @keyframes scroll-left{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  .trust-track span{
+    color:rgba(245,240,230,0.5);
+    font-size:0.82rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:64px;
+  }
+  .trust-track span strong{ color:var(--gold-soft); font-weight:700; }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding:120px 0; }
+  .section-head{
+    max-width:640px;
+    margin-bottom:64px;
+  }
+  .section-head .eyebrow{ margin-bottom:16px; display:block; }
+  .section-head h2{
+    font-size:clamp(2rem, 3.6vw, 2.9rem);
+    font-weight:500;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+  }
+  .section-head h2 em{ font-style:italic; color:var(--bronze); font-weight:500; }
+  .section-head p{
+    margin-top:18px;
+    font-size:1.02rem;
+    color:var(--charcoal);
+    line-height:1.6;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services{ background:var(--parchment-dim); }
+  .service-list{
+    border-top:1px solid var(--line);
+  }
+  .service-row{
+    display:grid;
+    grid-template-columns:100px 1fr 1.3fr;
+    gap:40px;
+    align-items:start;
+    padding:40px 0;
+    border-bottom:1px solid var(--line);
+    transition:padding-left .3s ease;
+  }
+  .service-row:hover{ padding-left:12px; }
+  .service-num{
+    font-family:'Fraunces', serif;
+    font-size:1rem;
+    color:var(--bronze);
+    padding-top:6px;
+  }
+  .service-name{
+    font-family:'Fraunces', serif;
+    font-size:1.5rem;
+    font-weight:500;
+    line-height:1.25;
+  }
+  .service-desc{
+    color:var(--charcoal);
+    font-size:0.98rem;
+    line-height:1.65;
+    padding-top:4px;
+  }
+
+  /* ---------- WHY CHOOSE ---------- */
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .why-card{
+    background:var(--parchment);
+    padding:36px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .why-icon{
+    width:38px; height:38px;
+    color:var(--gold);
+  }
+  .why-card h3{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    font-weight:500;
+  }
+  .why-card p{
+    font-size:0.88rem;
+    color:var(--charcoal);
+    line-height:1.55;
+  }
+
+  /* ---------- PROCESS ---------- */
+  .process{ background:var(--ink); color:var(--parchment); }
+  .process .section-head p{ color:rgba(245,240,230,0.6); }
+  .process .eyebrow{ color:var(--gold-soft); }
+  .process-steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    position:relative;
+  }
+  .process-steps::before{
+    content:'';
+    position:absolute;
+    top:19px; left:0; right:0;
+    height:1px;
+    background:rgba(245,240,230,0.15);
+  }
+  .p-step{
+    position:relative;
+    padding-right:24px;
+  }
+  .p-dot{
+    width:38px; height:38px;
+    border-radius:50%;
+    background:var(--ink);
+    border:1px solid var(--gold);
+    color:var(--gold-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces', serif;
+    font-size:0.92rem;
+    margin-bottom:26px;
+    position:relative;
+    z-index:2;
+  }
+  .p-step h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.15rem;
+    margin-bottom:10px;
+  }
+  .p-step p{
+    font-size:0.9rem;
+    color:rgba(245,240,230,0.55);
+    line-height:1.6;
+  }
+
+  /* ---------- SAMPLE WORK ---------- */
+  .sample-work{ background:var(--parchment-dim); }
+  .sample-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:56px;
+  }
+  .sample-item{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:28px;
+    align-items:center;
+  }
+  .sample-cover{
+    position:relative;
+    background:var(--ink);
+    border-radius:4px;
+    padding:30px 24px;
+    box-shadow:0 30px 60px -20px rgba(26,23,20,0.3);
+    aspect-ratio:3/4;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .sample-cover .eyebrow{ color:var(--gold-soft); font-size:0.65rem; }
+  .sample-cover .sc-title{
+    font-family:'Fraunces', serif;
+    color:var(--parchment);
+    font-size:1.4rem;
+    font-weight:600;
+    line-height:1.14;
+    margin-top:14px;
+  }
+  .sample-cover .sc-verse{
+    color:rgba(245,240,230,0.5);
+    font-size:0.72rem;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    margin-top:12px;
+    font-weight:600;
+  }
+  .sample-cover .sc-foot{
+    color:rgba(245,240,230,0.55);
+    font-size:0.75rem;
+    line-height:1.55;
+    border-top:1px solid rgba(245,240,230,0.15);
+    padding-top:14px;
+  }
+  .sample-cover .sc-foot strong{ color:var(--gold-soft); display:block; font-family:'Fraunces', serif; font-size:0.92rem; font-weight:500; margin-bottom:2px; }
+
+  .sample-copy .tag-row{
+    display:flex;
+    gap:8px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+  }
+  .sample-copy .pill{
+    font-size:0.66rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--bronze);
+    border:1px solid var(--bronze);
+    border-radius:100px;
+    padding:5px 12px;
+  }
+  .sample-copy h3{
+    font-family:'Fraunces', serif;
+    font-size:1.3rem;
+    font-weight:500;
+    margin-bottom:12px;
+    line-height:1.25;
+  }
+  .sample-copy p{
+    color:var(--charcoal);
+    font-size:0.9rem;
+    line-height:1.6;
+    margin-bottom:12px;
+  }
+  .sample-copy .btn-primary{
+    margin-top:10px;
+    padding:12px 20px;
+    font-size:0.82rem;
+  }
+
+  /* ---------- CTA / CONTACT ---------- */
+  .contact{
+    background:
+      radial-gradient(ellipse 700px 400px at 15% 20%, rgba(201,151,31,0.08), transparent 60%),
+      var(--parchment);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+  }
+  .contact h2{
+    font-size:clamp(2.1rem, 3.8vw, 3rem);
+    font-weight:500;
+    line-height:1.14;
+    margin-bottom:22px;
+  }
+  .contact h2 .gold{ color:var(--gold); }
+  .contact p.lede{
+    color:var(--charcoal);
+    font-size:1.02rem;
+    line-height:1.65;
+    margin-bottom:34px;
+    max-width:440px;
+  }
+  .contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .contact-info a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:0.98rem;
+    font-weight:500;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    transition:color .2s, padding-left .2s;
+  }
+  .contact-info a:hover{ color:var(--bronze); padding-left:6px; }
+  .contact-info svg{ width:19px; height:19px; color:var(--gold); flex-shrink:0; }
+
+  .qr-card{
+    background:var(--ink);
+    border-radius:6px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 30px 60px -20px rgba(26,23,20,0.3);
+  }
+  .qr-card .tag{
+    color:var(--gold-soft);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .qr-card h3{
+    font-family:'Fraunces', serif;
+    color:var(--parchment);
+    font-size:1.25rem;
+    font-weight:500;
+    margin-bottom:24px;
+  }
+  .qr-box{
+    background:var(--parchment);
+    border-radius:4px;
+    padding:18px;
+    display:inline-block;
+    margin-bottom:20px;
+  }
+  .qr-box svg{ width:170px; height:170px; display:block; }
+  .qr-card .hint{
+    color:rgba(245,240,230,0.5);
+    font-size:0.85rem;
+    line-height:1.5;
+  }
+
+  /* ---------- VALUES BAR ---------- */
+  .values-bar{
+    background:var(--ink);
+    padding:26px 0;
+  }
+  .values-bar .wrap{
+    display:flex;
+    justify-content:center;
+    gap:48px;
+    flex-wrap:wrap;
+  }
+  .values-bar span{
+    color:var(--gold-soft);
+    font-size:0.78rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:rgba(245,240,230,0.6);
+    padding:56px 0 32px;
+    border-top:1px solid rgba(245,240,230,0.08);
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:32px;
+    margin-bottom:40px;
+  }
+  .footer-brand{
+    font-family:'Fraunces', serif;
+    color:var(--parchment);
+    font-size:1.2rem;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .footer-brand + p{
+    font-size:0.88rem;
+    max-width:280px;
+    line-height:1.6;
+  }
+  .footer-links{
+    display:flex;
+    gap:60px;
+    flex-wrap:wrap;
+  }
+  .footer-col h4{
+    color:var(--parchment);
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+    font-weight:600;
+  }
+  .footer-col a{
+    display:block;
+    font-size:0.88rem;
+    margin-bottom:10px;
+    transition:color .2s;
+  }
+  .footer-col a:hover{ color:var(--gold-soft); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+    padding-top:28px;
+    border-top:1px solid rgba(245,240,230,0.08);
+    font-size:0.8rem;
+  }
+
+  /* reveal on scroll */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    .nav-links{ display:none; }
+    .menu-btn{ display:block; }
+    .hero .wrap{ grid-template-columns:1fr; gap:48px; }
+    .signature-panel{ min-height:340px; }
+    .service-row{ grid-template-columns:1fr; gap:12px; }
+    .service-num{ padding-top:0; }
+    .why-grid{ grid-template-columns:repeat(2,1fr); }
+    .process-steps{ grid-template-columns:repeat(2,1fr); row-gap:40px; }
+    .process-steps::before{ display:none; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .values-bar .wrap{ gap:22px; }
+    .sample-grid{ grid-template-columns:1fr; gap:44px; }
+  }
+  @media (max-width: 560px){
+    .wrap{ padding:0 20px; }
+    section{ padding:80px 0; }
+    .why-grid{ grid-template-columns:1fr; }
+    .footer-top{ flex-direction:column; }
+    .sample-item{ grid-template-columns:1fr; }
+    .sample-cover{ aspect-ratio:16/10; max-width:280px; margin:0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <nav class="wrap">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 30 30" fill="none">
+          <circle cx="15" cy="15" r="13.5" stroke="#C9971F" stroke-width="1.2"/>
+          <path d="M15 6 L18 12 L15 24 L12 12 Z" fill="#1A1714"/>
+        </svg>
+      </span>
+      The Salty Pen
+    </div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#why">Why Us</a>
+      <a href="#sample-work">Sample Work</a>
+      <a href="#contact" class="nav-cta">Get Started</a>
+    </div>
+    <button class="menu-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="locale-tag"><span class="dot"></span> Lagos, Nigeria — Serving Clients Worldwide</div>
+      <h1>We transform <span class="gold">spoken words</span> into <em>lasting resources.</em></h1>
+      <p class="lede">From audio to published excellence — we help you preserve your message, amplify your impact, and leave <strong>a legacy that lasts.</strong></p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">
+          Start a project
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#services" class="btn-ghost">See our services</a>
+      </div>
+    </div>
+
+    <div class="signature-panel reveal">
+      <div class="tag">Spoken → Preserved</div>
+      <canvas id="wave-canvas" aria-hidden="true"></canvas>
+      <p class="transform-caption">A sermon. An interview. A father's testimony. <span class="hl">We turn it into something that outlasts the room it was spoken in.</span></p>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-track">
+    <span>
+      <strong>Sermons</strong> · Interviews · <strong>Podcasts</strong> · Meetings · <strong>Lectures</strong> · Memoirs · <strong>Devotionals</strong> · Manuscripts
+      <strong>Sermons</strong> · Interviews · <strong>Podcasts</strong> · Meetings · <strong>Lectures</strong> · Memoirs · <strong>Devotionals</strong> · Manuscripts
+    </span>
+  </div>
+</div>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Core Services</span>
+      <h2>Four steps between <em>a voice</em> and a finished work.</h2>
+      <p>Each service stands alone, or moves together as one pipeline — from the first recording to the finished, published piece.</p>
+    </div>
+
+    <div class="service-list">
+      <div class="service-row reveal">
+        <div class="service-num">01</div>
+        <div class="service-name">Audio Transcription</div>
+        <div class="service-desc">Accurate, clean, and well-structured transcripts for sermons, interviews, podcasts, meetings, and lectures — every word captured, correctly attributed, ready to work with.</div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">02</div>
+        <div class="service-name">Manuscript Editing</div>
+        <div class="service-desc">Polishing your manuscript for clarity, flow, grammar, and impact — so the version a reader meets is the strongest version of what you meant to say.</div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">03</div>
+        <div class="service-name">Professional PDF &amp; Book Formatting</div>
+        <div class="service-desc">Beautiful, reader-friendly layout and formatting for ebooks, print books, workbooks, and lead magnets — designed to be held, read, and kept.</div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">04</div>
+        <div class="service-name">Content Repurposing</div>
+        <div class="service-desc">We turn one piece of content into many — books, devotionals, blog posts, and social media content that extends your reach without extending your workload.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why Choose Us</span>
+      <h2>What we promise <em>every</em> client, every time.</h2>
+    </div>
+
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
+        <h3>Accuracy You Can Trust</h3>
+        <p>Every transcript and edit is checked against the source — nothing paraphrased, nothing assumed.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 20L14 9M14 9l3-6 4 4-6 3M14 9l4 4"/></svg>
+        <h3>Excellence in Every Detail</h3>
+        <p>Typography, spacing, structure — the small decisions that make a document feel finished.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>
+        <h3>Timely Delivery</h3>
+        <p>Clear timelines, agreed upfront — your project moves on the schedule you were told.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>
+        <h3>Confidentiality Guaranteed</h3>
+        <p>Your recordings and manuscripts, especially personal or ministry material, stay private.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How It Works</span>
+      <h2>From your <em>raw audio</em> to a finished resource.</h2>
+      <p>A straightforward path — you send the source material, we handle the craft.</p>
+    </div>
+
+    <div class="process-steps">
+      <div class="p-step reveal">
+        <div class="p-dot">1</div>
+        <h3>Share your audio</h3>
+        <p>Send your recording — a sermon, interview, or set of voice notes — over WhatsApp or email.</p>
+      </div>
+      <div class="p-step reveal">
+        <div class="p-dot">2</div>
+        <h3>We transcribe &amp; edit</h3>
+        <p>Your words become a clean, accurate manuscript, polished for clarity and flow.</p>
+      </div>
+      <div class="p-step reveal">
+        <div class="p-dot">3</div>
+        <h3>We format &amp; design</h3>
+        <p>The manuscript becomes a properly designed PDF, ebook, or print-ready book.</p>
+      </div>
+      <div class="p-step reveal">
+        <div class="p-dot">4</div>
+        <h3>You receive the resource</h3>
+        <p>A finished piece, ready to publish, print, share, or repurpose across platforms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sample-work" id="sample-work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Sample Work</span>
+      <h2>From a Sunday message to <em>a keepsake document.</em></h2>
+      <p>Here's what the pipeline produces — a real sermon, transcribed, edited, and formatted into a piece worth keeping.</p>
+    </div>
+
+    <div class="sample-grid reveal">
+      <div class="sample-item">
+        <div class="sample-cover">
+          <div>
+            <span class="eyebrow">Youth Sunday · Saviour's Model Parish</span>
+            <div class="sc-title">The Call of Destiny</div>
+            <div class="sc-verse">Jeremiah 1:5&ndash;8</div>
+          </div>
+          <div class="sc-foot">
+            <strong>Minister Joe Akagwe</strong>
+            Sunday, 19 July 2026
+          </div>
+        </div>
+
+        <div class="sample-copy">
+          <div class="tag-row">
+            <span class="pill">Transcription</span>
+            <span class="pill">Editing</span>
+            <span class="pill">PDF Formatting</span>
+          </div>
+          <h3>A spoken sermon, preserved as a reference document.</h3>
+          <p>Transcribed from a live Youth Sunday message, edited for clarity while keeping the minister's voice intact, and formatted with scripture callouts and clean section breaks.</p>
+          <a href="The-Call-of-Destiny-Sample.pdf" target="_blank" rel="noopener" class="btn-primary">
+            View sample
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="sample-item">
+        <div class="sample-cover">
+          <div>
+            <span class="eyebrow">CAN &middot; Imedu-Nla Chapter</span>
+            <div class="sc-title">Peace In The Midst Of The Storm</div>
+            <div class="sc-verse">Psalm 20:1&ndash;2</div>
+          </div>
+          <div class="sc-foot">
+            <strong>Pastor Simeon Abutu</strong>
+            June 19, 2026
+          </div>
+        </div>
+
+        <div class="sample-copy">
+          <div class="tag-row">
+            <span class="pill">Transcription</span>
+            <span class="pill">Editing</span>
+            <span class="pill">PDF Formatting</span>
+          </div>
+          <h3>A message on trusting God, formatted for lasting reference.</h3>
+          <p>A CAN chapter address transcribed and edited into a structured teaching document — scripture references set apart, section headers guiding the reader through each point.</p>
+          <a href="Peace-In-The-Midst-Of-The-Storm-Sample.pdf" target="_blank" rel="noopener" class="btn-primary">
+            View sample
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="eyebrow">Let's Bring Your Words to Life</span>
+        <h2 style="margin-top:16px;">Your message deserves more than <span class="gold">to be heard.</span></h2>
+        <p class="lede">It deserves to be preserved. Scan the code, send a message, or reach out directly — let's talk about your project.</p>
+
+        <div class="contact-info">
+          <a href="tel:09155625464">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            09155625464
+          </a>
+          <a href="mailto:legacywords01@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+            legacywords01@gmail.com
+          </a>
+          <a href="https://www.thesaltypen.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+            www.thesaltypen.com
+          </a>
+        </div>
+      </div>
+
+      <div class="qr-card reveal">
+        <div class="tag">WhatsApp Business</div>
+        <h3>Scan. Chat. Get Started.</h3>
+        <div class="qr-box">
+          <img src="whatsapp-qr.png" alt="QR code to start a WhatsApp chat with The Salty Pen Content Studio" width="170" height="170" style="width:170px;height:170px;display:block;">
+        </div>
+        <p class="hint">Scan this code to start a WhatsApp chat with us — or tap the button below on mobile.</p>
+        <a href="https://wa.me/2349155625464" target="_blank" rel="noopener" class="btn-primary" style="margin-top:20px; justify-content:center;">Open WhatsApp Chat</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="values-bar">
+  <div class="wrap">
+    <span>Faith</span>
+    <span>Legacy</span>
+    <span>Excellence</span>
+    <span>Impact</span>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">The Salty Pen</div>
+        <p>Content Studio — we transform spoken words into lasting resources, from audio to published excellence.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="#services">Services</a>
+          <a href="#why">Why Us</a>
+          <a href="#process">Process</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="tel:09155625464">09155625464</a>
+          <a href="mailto:legacywords01@gmail.com">legacywords01@gmail.com</a>
+          <a href="https://wa.me/2349155625464" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Salty Pen Content Studio. All rights reserved.</span>
+      <span>Lagos, Nigeria — Serving clients worldwide</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // header scroll state
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // signature waveform -> lines animation
+  const canvas = document.getElementById('wave-canvas');
+  const ctx = canvas.getContext('2d');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resizeCanvas(){
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * devicePixelRatio;
+    canvas.height = rect.height * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const BAR_COUNT = 42;
+  let seeds = Array.from({length: BAR_COUNT}, (_,i) => 0.25 + Math.abs(Math.sin(i*0.7))*0.7);
+
+  let t = 0;
+  function draw(){
+    const w = canvas.getBoundingClientRect().width;
+    const h = canvas.getBoundingClientRect().height;
+    ctx.clearRect(0,0,w,h);
+
+    const gap = 4;
+    const barW = (w - gap*(BAR_COUNT-1)) / BAR_COUNT;
+    const midY = h/2;
+
+    // cycle: 0-1 waveform, 1-2 morph to flat lines (paragraph), loops
+    const cycle = (t % 8000) / 8000; // 8s loop
+    const morphAmt = Math.max(0, Math.min(1, (cycle - 0.55) / 0.35)); // settle into lines in back half
+    const flatten = cycle > 0.9 ? (1 - (cycle-0.9)/0.1) : (1-morphAmt); // release back to wave at loop end
+
+    for(let i=0;i<BAR_COUNT;i++){
+      const wave = seeds[i] * (0.5 + 0.5*Math.sin(t/260 + i*0.5)) * h * 0.42 + h*0.06;
+      // target "text line" height: alternating short/long like justified text
+      const lineTarget = (i % 7 === 6) ? h*0.05 : h*0.16 + (i%3)*h*0.03;
+      const amt = 1 - flatten;
+      const barH = wave * (1-amt) + lineTarget * amt;
+
+      const x = i*(barW+gap);
+      const isGold = i % 5 === 0;
+      ctx.fillStyle = isGold ? '#C9971F' : 'rgba(245,240,230,0.55)';
+      ctx.globalAlpha = 1;
+      ctx.beginPath();
+      const y = midY - barH/2;
+      const r = Math.min(2, barW/2);
+      roundRect(ctx, x, y, barW, barH, r);
+      ctx.fill();
+    }
+
+    t += 16;
+    if(!reducedMotion){
+      requestAnimationFrame(draw);
+    }
+  }
+
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+
+  if(reducedMotion){
+    // static settled state
+    t = 6000;
+    draw();
+  } else {
+    requestAnimationFrame(draw);
+  }
+</script>
+
+</body>
+</html>
